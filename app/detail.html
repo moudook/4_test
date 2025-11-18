@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Startup Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-navbar">
+        <div class="navbar-left">
+            <div class="app-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" class="logo-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z" />
+                </svg>
+                <span class="app-title">Deal Flow</span>
+            </div>
+            <button id="homeBtn" class="home-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" class="home-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span>Dashboard</span>
+            </button>
+        </div>
+        <div class="navbar-center">
+            <div class="navbar-search-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" class="navbar-search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input type="text" id="searchInput" placeholder="Search anywhere..." class="navbar-search-input" />
+            </div>
+        </div>
+        <div class="navbar-right">
+            <button class="navbar-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" class="navbar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </button>
+            <button class="navbar-btn share-btn">
+                <span>Share</span>
+            </button>
+        </div>
+    </nav>
+
+    <div id="app-container">
+        <!-- Main Content Area -->
+        <main id="main-content" class="detail-content">
+            <!-- Tab Navigation -->
+            <div class="tab-navigation">
+                <button class="tab-btn active" data-tab="startupNotes">Startup Notes</button>
+                <button class="tab-btn" data-tab="founderNotes">Founder Notes</button>
+                <button class="tab-btn" data-tab="legalDueDiligence">Legal Diligence</button>
+                <button class="tab-btn" data-tab="techDueDiligence">Tech Diligence</button>
+                <button class="tab-btn" data-tab="customerDueDiligence">Customer Diligence</button>
+            </div>
+
+            <!-- Tab Content Container -->
+            <div class="tab-content-container">
+                <!-- Startup Notes Content -->
+                <div class="tab-content active" id="tab-startupNotes">
+                    <div class="card-grid">
+                        <div class="detail-card">
+                            <div class="card-header-detail">
+                                <h3 class="card-title-detail">Startup Notes</h3>
+                                <div class="save-cancel-buttons" style="display: none;">
+                                    <button id="saveStartupNotes" class="save-field-btn" data-field="startupNotes">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="save-field-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        <span>Save</span>
+                                    </button>
+                                    <button id="cancelStartupNotes" class="cancel-field-btn" data-field="startupNotes">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="cancel-field-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                        <span>Cancel</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <textarea class="card-textarea" id="startupNotes" placeholder="Add notes about the startup..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Founder Notes Content -->
+                <div class="tab-content" id="tab-founderNotes">
+                    <div class="card-grid">
+                        <div class="detail-card">
+                            <div class="card-header-detail">
+                                <h3 class="card-title-detail">Founder Notes</h3>
+                                <div class="save-cancel-buttons" style="display: none;">
+                                    <button id="saveFounderNotes" class="save-field-btn" data-field="founderNotes">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="save-field-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        <span>Save</span>
+                                    </button>
+                                    <button id="cancelFounderNotes" class="cancel-field-btn" data-field="founderNotes">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="cancel-field-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                        <span>Cancel</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <textarea class="card-textarea" id="founderNotes" placeholder="Add notes about the founders..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legal Due Diligence Content -->
+                <div class="tab-content" id="tab-legalDueDiligence">
+                    <div class="card-grid">
+                        <div class="detail-card">
+                            <div class="card-header-detail">
+                                <div>
+                                    <h3 class="card-title-detail">Legal Diligence</h3>
+                                    <span class="card-subtitle-detail">Fintech</span>
+                                </div>
+                                <div class="save-cancel-buttons" style="display: none;">
+                                    <button id="saveLegalDueDiligence" class="save-field-btn" data-field="legalDueDiligence">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="save-field-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        <span>Save</span>
+                                    </button>
+                                    <button id="cancelLegalDueDiligence" class="cancel-field-btn" data-field="legalDueDiligence">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="cancel-field-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                        <span>Cancel</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <textarea class="card-textarea" id="legalDueDiligence" placeholder="Add legal due diligence information..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tech Due Diligence Content -->
+                <div class="tab-content" id="tab-techDueDiligence">
+                    <div class="card-grid">
+                        <div class="detail-card">
+                            <div class="card-header-detail">
+                                <h3 class="card-title-detail">Tech Diligence</h3>
+                                <div class="save-cancel-buttons" style="display: none;">
+                                    <button id="saveTechDueDiligence" class="save-field-btn" data-field="techDueDiligence">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="save-field-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        <span>Save</span>
+                                    </button>
+                                    <button id="cancelTechDueDiligence" class="cancel-field-btn" data-field="techDueDiligence">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="cancel-field-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                        <span>Cancel</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <textarea class="card-textarea" id="techDueDiligence" placeholder="Add technical due diligence information..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Due Diligence Content -->
+                <div class="tab-content" id="tab-customerDueDiligence">
+                    <div class="card-grid">
+                        <div class="detail-card">
+                            <div class="card-header-detail">
+                                <h3 class="card-title-detail">Customer Diligence</h3>
+                                <div class="save-cancel-buttons" style="display: none;">
+                                    <button id="saveCustomerDueDiligence" class="save-field-btn" data-field="customerDueDiligence">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="save-field-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        <span>Save</span>
+                                    </button>
+                                    <button id="cancelCustomerDueDiligence" class="cancel-field-btn" data-field="customerDueDiligence">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="cancel-field-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                        <span>Cancel</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <textarea class="card-textarea" id="customerDueDiligence" placeholder="Add customer due diligence information..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="notification" class="action-notification">
+        <div id="notificationText"></div>
+    </div>
+
+    <script src="detail.js"></script>
+    <script src="universal-search.js"></script>
+</body>
+</html>

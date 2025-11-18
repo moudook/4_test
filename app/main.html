@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Main Application</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-navbar">
+        <div class="navbar-left">
+            <div class="app-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" class="logo-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z" />
+                </svg>
+                <span class="app-title">Deal Flow</span>
+            </div>
+            <div class="view-options">
+                <button class="view-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="view-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                    </svg>
+                    <span>Sheet View</span>
+                </button>
+                <button class="view-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="view-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                    </svg>
+                    <span>Board View</span>
+                </button>
+            </div>
+        </div>
+        <div class="navbar-center">
+            <div class="navbar-search-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" class="navbar-search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input type="text" id="searchInput" placeholder="Search anywhere..." class="navbar-search-input" />
+            </div>
+        </div>
+        <div class="navbar-right">
+            <!-- Backend Connection Status Indicator -->
+            <div id="backendStatusIndicator" class="backend-status-indicator" title="Backend Connection Status">
+                <div class="status-dot status-unknown"></div>
+                <span class="status-text">Connecting...</span>
+            </div>
+            <button class="navbar-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" class="navbar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </button>
+            <button class="navbar-btn share-btn">
+                <span>Share</span>
+            </button>
+        </div>
+    </nav>
+
+    <div id="app-container">
+        <!-- Summary Blocks Area -->
+        <aside id="summaryBlocksArea" class="summary-blocks-area">
+            <div id="summaryBlocksContainer" class="summary-blocks-container">
+                <!-- Summary blocks will be dynamically added here -->
+                <div class="summary-block" data-block-id="default">
+                    <div class="summary-block-header">
+                        <h3 class="summary-block-title">Summary</h3>
+                        <button class="summary-block-delete" title="Delete block" style="display: none;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="summary-block-delete-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="summary-block-content">
+                        <div class="summary-placeholder">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="summary-placeholder-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <p class="summary-placeholder-text">Select a startup to view summary</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main id="main-content">
+            <!-- Section Header -->
+            <div class="section-header">
+                <div class="section-header-left">
+                    <!-- Navigation Tabs -->
+                    <div class="nav-tabs">
+                        <button class="nav-tab active" data-tab="applications" id="tabApplications">
+                            <span>Applications</span>
+                        </button>
+                        <button class="nav-tab" data-tab="startups" id="tabStartups">
+                            <span>Startups</span>
+                        </button>
+                        <button class="nav-tab" data-tab="meetings" id="tabMeetings">
+                            <span>Meetings</span>
+                        </button>
+                    </div>
+                    <h2 class="section-title" id="sectionTitle">Open opportunities</h2>
+                </div>
+                <div class="action-buttons">
+                    <button id="undoBtn" class="action-btn action-btn-undo" title="Undo" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                        </svg>
+                        <span>Undo</span>
+                    </button>
+                    <button id="redoBtn" class="action-btn action-btn-redo" title="Redo" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10h-10a8 8 0 00-8 8v2M21 10l-6 6m6-6l-6-6" />
+                        </svg>
+                        <span>Redo</span>
+                    </button>
+                    <div class="action-buttons-divider"></div>
+                    <button id="editBtn" class="action-btn action-btn-edit" title="Edit Selected" style="display: none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        <span id="editBtnText">Edit</span>
+                    </button>
+                    <button id="deleteBtn" class="action-btn action-btn-delete" title="Delete Selected" style="display: none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                        <span id="deleteBtnText">Delete</span>
+                    </button>
+                    <!-- Status Filter Dropdown -->
+                    <select id="statusFilter" class="action-btn status-filter" title="Filter by Status">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                    <button class="action-btn" title="Filter">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                        </svg>
+                        <span>Filter</span>
+                    </button>
+                    <button class="action-btn" title="Sort">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                        </svg>
+                        <span>Sort</span>
+                    </button>
+                    <!-- Create Meeting Button (shown only in meetings tab) -->
+                    <button id="createMeetingBtn" class="action-btn" title="Create Meeting" style="display: none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span>Create Meeting</span>
+                    </button>
+                    <button id="summaryBtn" class="action-btn" title="Add Summary Block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <span>Summary</span>
+                    </button>
+                    <button id="calendarBtn" class="action-btn icon-only" title="Calendar">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </button>
+                    <button class="action-btn icon-only" title="Download">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                    </button>
+                    <button id="rightSidebarToggle" class="action-btn icon-only" title="Toggle AI Chat Sidebar">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                        </svg>
+                    </button>
+                    <button id="mainRecordingBtn" class="action-btn icon-only recording-btn-main" title="Start Recording">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="action-icon" fill="currentColor" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="6" fill="currentColor"/>
+                        </svg>
+                    </button>
+                    <button class="action-btn icon-only" title="Fullscreen">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="action-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Applications View -->
+            <div class="startup-container" id="applicationsView">
+                <div class="startup-card">
+                    <div class="card-header">
+                        <div>
+                            <h1 class="card-title">Startup Portfolio</h1>
+                            <p class="card-subtitle">Here you will see your startup investments.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container-wrapper">
+                        <div class="table-container">
+                            <table class="w-full startup-table" id="startupTable">
+                                <thead class="table-header-fixed">
+                                    <tr class="text-left text-sm text-gray-500 border-b border-gray-200 startup-table-header">
+                                        <th class="pb-3 px-4 font-medium sticky-col-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="table-checkbox-wrapper">
+                                                    <label class="custom-checkbox-container">
+                                                        <input type="checkbox" id="selectAll">
+                                                        <div class="custom-checkbox-visual"></div>
+                                                    </label>
+                                                </div>
+                                                <span>Startup</span>
+                                                <svg class="column-sort-icon h-4 w-4 cursor-pointer" data-sort="company" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                        </th>
+                                        <th class="pb-3 px-4 font-medium">
+                                            <div class="flex items-center gap-2">
+                                                Industry
+                                                <svg class="column-sort-icon h-4 w-4 cursor-pointer" data-sort="industry" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                        </th>
+                                        <th class="pb-3 px-4 font-medium">Location
+                                            <svg class="column-sort-icon h-4 w-4 cursor-pointer" data-sort="location" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </th>
+                                        <th class="pb-3 px-4 font-medium">Founder Name
+                                            <svg class="column-sort-icon h-4 w-4 cursor-pointer" data-sort="founderName" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </th>
+                                        <th class="pb-3 px-4 font-medium">Founder Contact
+                                            <svg class="column-sort-icon h-4 w-4 cursor-pointer" data-sort="founderContact" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </th>
+                                        <th class="pb-3 px-4 font-medium">Round
+                                            <svg class="column-sort-icon h-4 w-4 cursor-pointer" data-sort="round" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </th>
+                                        <th class="pb-3 px-4 font-medium">Amount Raising
+                                            <svg class="column-sort-icon h-4 w-4 cursor-pointer" data-sort="amount" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </th>
+                                        <th class="pb-3 px-4 font-medium">Valuation
+                                            <svg class="column-sort-icon h-4 w-4 cursor-pointer" data-sort="valuation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </th>
+                                        <th class="pb-3 px-4 font-medium">Status
+                                            <svg class="column-sort-icon h-4 w-4 cursor-pointer" data-sort="status" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </th>
+                                        <th class="pb-3 px-4 font-medium">Deal Lead
+                                            <svg class="column-sort-icon h-4 w-4 cursor-pointer" data-sort="dealLead" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </th>
+                                        <th class="pb-3 px-4 font-medium">Date Added
+                                            <svg class="column-sort-icon h-4 w-4 cursor-pointer" data-sort="dateAdded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </th>
+                                        <th class="pb-3 px-4 font-medium">Source
+                                            <svg class="column-sort-icon h-4 w-4 cursor-pointer" data-sort="source" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </th>
+                                        <th class="pb-3 px-4 font-medium">Summary</th>
+                                        <th class="pb-3 px-4 font-medium">Notes</th>
+                                        <th class="pb-3 px-4 font-medium">Deck Link</th>
+                                        <th class="pb-3 px-4 font-medium">CPL Link</th>
+                                        <th class="pb-3 px-4 font-medium">Key Insight</th>
+                                        <th class="pb-3 px-4 font-medium">Next Action</th>
+                                        <th class="pb-3 px-4 font-medium">Reminder Date
+                                            <svg class="column-sort-icon h-4 w-4 cursor-pointer" data-sort="reminderDate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody" class="divide-y divide-gray-200">
+                                    <!-- Table rows will be inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row justify-between items-center mt-6 gap-4">
+                        <div class="text-sm text-gray-500" id="showingInfo">Showing all results</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Startups View -->
+            <div class="startup-container" id="startupsView" style="display: none;">
+                <div class="startup-card">
+                    <div class="card-header">
+                        <div>
+                            <h1 class="card-title">Startups</h1>
+                            <p class="card-subtitle">Accepted applications converted to startups.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container-wrapper">
+                        <div class="table-container">
+                            <table class="w-full startup-table" id="startupsTable">
+                                <thead class="table-header-fixed">
+                                    <tr class="text-left text-sm text-gray-500 border-b border-gray-200 startup-table-header">
+                                        <th class="pb-3 px-4 font-medium">Company Name</th>
+                                        <th class="pb-3 px-4 font-medium">Date Accepted</th>
+                                        <th class="pb-3 px-4 font-medium">Application ID</th>
+                                        <th class="pb-3 px-4 font-medium">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="startupsTableBody" class="divide-y divide-gray-200">
+                                    <!-- Startup rows will be inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row justify-between items-center mt-6 gap-4">
+                        <div class="text-sm text-gray-500" id="showingStartupsInfo">Loading startups...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meetings View -->
+            <div class="startup-container" id="meetingsView" style="display: none;">
+                <div class="startup-card">
+                    <div class="card-header">
+                        <div>
+                            <h1 class="card-title">Meetings</h1>
+                            <p class="card-subtitle">Manage your VC meetings and transcripts.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container-wrapper">
+                        <div class="table-container">
+                            <table class="w-full startup-table" id="meetingsTable">
+                                <thead class="table-header-fixed">
+                                    <tr class="text-left text-sm text-gray-500 border-b border-gray-200 startup-table-header">
+                                        <th class="pb-3 px-4 font-medium">Meeting ID</th>
+                                        <th class="pb-3 px-4 font-medium">VC ID</th>
+                                        <th class="pb-3 px-4 font-medium">Start Time</th>
+                                        <th class="pb-3 px-4 font-medium">End Time</th>
+                                        <th class="pb-3 px-4 font-medium">Status</th>
+                                        <th class="pb-3 px-4 font-medium">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="meetingsTableBody" class="divide-y divide-gray-200">
+                                    <!-- Meeting rows will be inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row justify-between items-center mt-6 gap-4">
+                        <div class="text-sm text-gray-500" id="showingMeetingsInfo">Loading meetings...</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar - AI Chat Sidebar -->
+        <aside id="rightSidebar" class="sidebar sidebar-right">
+            <div class="sidebar-content sidebar-content-chat" id="rightSidebarContent">
+                <div class="sidebar-top-bar">
+                    <h3 class="sidebar-title-simple">AI Assistant</h3>
+                    <button id="rightSidebarClose" class="sidebar-close" title="Collapse AI Chat Sidebar">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-close-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message chat-message-ai">
+                        <div class="chat-message-content">
+                            <p>Hello! I'm your AI assistant. Ask me anything about your startup portfolio, or request summaries and insights.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <div class="search">
+                        <input type="text" id="chatInput" class="search__input" placeholder="Type your search query">
+                        <button id="chatSendBtn" class="search__button" title="Send message">
+                            <svg class="search__icon" aria-hidden="true" viewBox="0 0 24 24">
+                                <g>
+                                    <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+                                </g>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div id="notification" class="action-notification">
+        <div id="notificationText"></div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmModal" class="delete-confirm-modal" style="display: none;">
+        <div class="delete-confirm-overlay"></div>
+        <div class="delete-confirm-card">
+            <div class="delete-confirm-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+            </div>
+            <h2 class="delete-confirm-title">Confirm Deletion</h2>
+            <p class="delete-confirm-message" id="deleteConfirmMessage">Are you sure you want to delete this item? This action cannot be undone.</p>
+            <div class="delete-confirm-buttons">
+                <button id="deleteConfirmCancel" class="delete-confirm-btn delete-confirm-btn-cancel">Cancel</button>
+                <button id="deleteConfirmDelete" class="delete-confirm-btn delete-confirm-btn-delete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendar Modal -->
+    <div id="calendarModal" class="calendar-modal" style="display: none;">
+        <div class="calendar-modal-overlay"></div>
+        <div class="calendar-modal-content">
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button class="nav-button" id="prevMonth">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="month-year" id="monthYear">June 2023</div>
+                    <button class="nav-button" id="nextMonth">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="weekdays">
+                    <div>M</div>
+                    <div>T</div>
+                    <div>W</div>
+                    <div>T</div>
+                    <div>F</div>
+                    <div>S</div>
+                    <div>S</div>
+                </div>
+                
+                <div class="days" id="calendarDays">
+                    <!-- Calendar days will be generated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="edit-modal" style="display: none;">
+        <div class="edit-modal-overlay"></div>
+        <div class="edit-modal-content">
+            <div class="edit-modal-header">
+                <h2 class="edit-modal-title">Edit Startup</h2>
+                <button id="closeEditModal" class="edit-modal-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="edit-modal-body">
+                <form id="editForm">
+                    <div class="edit-form-group">
+                        <label class="edit-form-label">Company Name</label>
+                        <input type="text" id="editCompany" class="edit-form-input" required>
+                    </div>
+                    <div class="edit-form-row">
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">Industry</label>
+                            <input type="text" id="editIndustry" class="edit-form-input">
+                        </div>
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">Location</label>
+                            <input type="text" id="editLocation" class="edit-form-input">
+                        </div>
+                    </div>
+                    <div class="edit-form-row">
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">Founder Name</label>
+                            <input type="text" id="editFounderName" class="edit-form-input">
+                        </div>
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">Founder Contact</label>
+                            <input type="email" id="editFounderContact" class="edit-form-input">
+                        </div>
+                    </div>
+                    <div class="edit-form-row">
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">Round</label>
+                            <select id="editRound" class="edit-form-input">
+                                <option value="Pre-Seed">Pre-Seed</option>
+                                <option value="Seed">Seed</option>
+                                <option value="Series A">Series A</option>
+                                <option value="Series B">Series B</option>
+                                <option value="Series C">Series C</option>
+                            </select>
+                        </div>
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">Amount Raising</label>
+                            <input type="text" id="editAmount" class="edit-form-input">
+                        </div>
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">Valuation</label>
+                            <input type="text" id="editValuation" class="edit-form-input">
+                        </div>
+                    </div>
+                    <div class="edit-form-row">
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">Status</label>
+                            <select id="editStatus" class="edit-form-input">
+                                <option value="Source">Source</option>
+                                <option value="Qualification">Qualification</option>
+                                <option value="Intro Call">Intro Call</option>
+                                <option value="Partner Intro">Partner Intro</option>
+                                <option value="Internal Fit Check">Internal Fit Check</option>
+                                <option value="Light Diligence">Light Diligence</option>
+                                <option value="Deep Diligence">Deep Diligence</option>
+                                <option value="Investment Committee">Investment Committee</option>
+                                <option value="Final Diligence">Final Diligence</option>
+                                <option value="Term Sheet">Term Sheet</option>
+                                <option value="Closing">Closing</option>
+                                <option value="Onboarding">Onboarding</option>
+                                <option value="Portfolio Monitoring">Portfolio Monitoring</option>
+                            </select>
+                        </div>
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">Deal Lead</label>
+                            <input type="text" id="editDealLead" class="edit-form-input">
+                        </div>
+                    </div>
+                    <div class="edit-form-group">
+                        <label class="edit-form-label">Summary</label>
+                        <textarea id="editSummary" class="edit-form-textarea" rows="3"></textarea>
+                    </div>
+                    <div class="edit-form-group">
+                        <label class="edit-form-label">Notes</label>
+                        <textarea id="editNotes" class="edit-form-textarea" rows="3"></textarea>
+                    </div>
+                    <div class="edit-form-row">
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">Deck Link</label>
+                            <input type="url" id="editDeckLink" class="edit-form-input">
+                        </div>
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">CPL Link</label>
+                            <input type="url" id="editCplLink" class="edit-form-input">
+                        </div>
+                    </div>
+                    <div class="edit-form-group">
+                        <label class="edit-form-label">Key Insight</label>
+                        <textarea id="editKeyInsight" class="edit-form-textarea" rows="2"></textarea>
+                    </div>
+                    <div class="edit-form-row">
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">Next Action</label>
+                            <input type="text" id="editNextAction" class="edit-form-input">
+                        </div>
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">Reminder Date</label>
+                            <input type="text" id="editReminderDate" class="edit-form-input">
+                        </div>
+                    </div>
+                    <div class="edit-form-group">
+                        <label class="edit-form-label">Source</label>
+                        <select id="editSource" class="edit-form-input">
+                            <option value="Referral">Referral</option>
+                            <option value="Cold Outreach">Cold Outreach</option>
+                            <option value="Network">Network</option>
+                            <option value="Event">Event</option>
+                            <option value="Platform">Platform</option>
+                            <option value="Partnership">Partnership</option>
+                        </select>
+                    </div>
+                    <input type="hidden" id="editItemId">
+                </form>
+            </div>
+            <div class="edit-modal-footer">
+                <button type="button" id="cancelEditBtn" class="edit-btn edit-btn-cancel">Cancel</button>
+                <button type="button" id="saveEditBtn" class="edit-btn edit-btn-save">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Meeting Modal -->
+    <div id="createMeetingModal" class="edit-modal" style="display: none;">
+        <div class="edit-modal-overlay"></div>
+        <div class="edit-modal-content">
+            <div class="edit-modal-header">
+                <h2 class="edit-modal-title">Create New Meeting</h2>
+                <button id="closeCreateMeetingModal" class="edit-modal-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="edit-modal-body">
+                <form id="createMeetingForm">
+                    <div class="edit-form-group">
+                        <label class="edit-form-label">VC ID <span style="color: red;">*</span></label>
+                        <input type="text" id="createMeetingVcId" class="edit-form-input" required placeholder="Enter VC ID">
+                    </div>
+                </form>
+            </div>
+            <div class="edit-modal-footer">
+                <button type="button" id="cancelCreateMeetingBtn" class="edit-btn edit-btn-cancel">Cancel</button>
+                <button type="button" id="saveCreateMeetingBtn" class="edit-btn edit-btn-save">Create Meeting</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meeting Detail Modal -->
+    <div id="meetingDetailModal" class="edit-modal" style="display: none;">
+        <div class="edit-modal-overlay"></div>
+        <div class="edit-modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+            <div class="edit-modal-header">
+                <h2 class="edit-modal-title">Meeting Details</h2>
+                <button id="closeMeetingDetailModal" class="edit-modal-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="edit-modal-body">
+                <div id="meetingDetailContent">
+                    <!-- Meeting details will be inserted here -->
+                </div>
+            </div>
+            <div class="edit-modal-footer">
+                <button type="button" id="closeMeetingDetailBtn" class="edit-btn edit-btn-cancel">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="renderer.js"></script>
+    <script src="universal-search.js"></script>
+    <script src="calendar.js"></script>
+    <script src="screen-recorder.js"></script>
+    <script src="meetings.js"></script>
+    <script src="startups.js"></script>
+</body>
+</html>

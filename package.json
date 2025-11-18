@@ -1,0 +1,15 @@
+{
+  "name": "electron-app-v2",
+  "version": "1.0.0",
+  "description": "A complex Electron app with login and sidebars",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^28.1.0"
+  }
+}
